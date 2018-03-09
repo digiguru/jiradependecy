@@ -30,11 +30,13 @@ it('Can generate Dot notation format', () => {
     'key': 'WED-5317',
     'blocks': ['WED-7039']
   };
-  const output = 
+  
+expect(toDot(input)).toBe(
 `digraph graphname {
   WED5317 -> WED7039;
 }`
-expect(toDot(input)).toBe(output); 
+);
+
 })
  
 it('Can generate Dot notation format with multiple blocks', () => {
@@ -42,12 +44,12 @@ it('Can generate Dot notation format with multiple blocks', () => {
     'key': 'WED-5317',
     'blocks': ['WED-7039', 'WED-6789']
   };
-  const output = 
+  
+expect(toDot(input)).toBe(
 `digraph graphname {
   WED5317 -> WED7039;
   WED5317 -> WED6789;
-}`
-expect(toDot(input)).toBe(output); 
+}`); 
 })
 
 it('Can generate Dot notation format with is blocked by', () => {
@@ -55,24 +57,28 @@ it('Can generate Dot notation format with is blocked by', () => {
     'key': 'WED-5317',
     'is blocked by': ['WED-6962', 'WED-6960'],
   };
-  const output = 
+expect(toDot(input)).toBe(
 `digraph graphname {
   WED6962 -> WED5317;
   WED6960 -> WED5317;
-}`;
-expect(toDot(input)).toBe(output);  
+}`);  
 })
 
 it('Can generate dot notation for entire object', () => {
-  expect(toDot(parseBlockers(example, 'WED-5317'))).toBe(`digraph graphname {
+
+expect(toDot(parseBlockers(example, 'WED-5317'))).toBe(
+`digraph graphname {
   WED6962 -> WED5317;
   WED6960 -> WED5317;
   WED5317 -> WED7039;
 }`);
-  expect(toDot(parseBlockers(example, 'WED-7039'))).toBe(`digraph graphname {
+
+expect(toDot(parseBlockers(example, 'WED-7039'))).toBe(
+`digraph graphname {
   WED5317 -> WED7039;
   WED911 -> WED7039;
 }`);
+
 });
 
 it('Can generate dot notation for multiple objects', () => {
@@ -81,12 +87,14 @@ it('Can generate dot notation for multiple objects', () => {
     parseBlockers(example, 'WED-7039')
   ]
 
-  expect(toDotMultiple(arr)).toBe(`digraph graphname {
+expect(toDotMultiple(arr)).toBe(
+`digraph graphname {
   WED6962 -> WED5317;
   WED6960 -> WED5317;
   WED5317 -> WED7039;
   WED911 -> WED7039;
 }`);
+
 });
 
 
