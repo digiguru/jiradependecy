@@ -1,6 +1,24 @@
 export function toDot(input){
     return toDotMultiple([input]);
 }
+
+export function toDotMultiple(inputItems){
+    return `digraph graphname {\n${toDotLines(inputItems).join("")}}`;
+}
+
+export function removeDashes(input) {
+    return input.replace('-','');
+}
+
+function toDotLines(inputItems) {
+    let lines = [];
+    inputItems.forEach(input => {
+        lines.push(...toDotLine(input));
+    });
+    //Dedupe
+    return [...new Set(lines)];
+}
+
 function toDotLine(input) {
     let lines = [];
     if(input['is blocked by']) {
@@ -15,21 +33,4 @@ function toDotLine(input) {
     }
     return lines;
 }
-function toDotLines(inputItems) {
-    let lines = [];
-    inputItems.forEach(input => {
-        lines.push(...toDotLine(input));
-    });
-    return [...new Set(lines)];
-}
 
-export function toDotMultiple(inputItems){
-    let result = "digraph graphname {\n";
-    result += toDotLines(inputItems).join("");
-    result += '}';
-    return result;
-}
-
-export function removeDashes(input) {
-    return input.replace('-','');
-} 
