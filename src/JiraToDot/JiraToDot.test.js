@@ -1,8 +1,7 @@
 
 import {example} from './unitExample';
-import {parseBlockers} from './parse';
+import {parseBlockers, parseMultipleBlockers} from './parse';
 import {toDot, toDotMultiple, removeDashes} from './toDot';
-
 
 it('Has data', () => {
   expect(example.total).toBe(1);
@@ -21,6 +20,21 @@ it('Can parse out the linked ticket info', () => {
   });
 });
 
+it('Parses multiple objects', () => {
+  expect(parseMultipleBlockers(example)).toMatchObject([
+    {
+      "key": "WED-5317",
+      "blocks": ["WED-7039"],
+      "is blocked by":  ["WED-6962","WED-6960"]
+    },
+    {
+      "blocks": [],
+      "is blocked by": ["WED-5317","WED-911"],
+      "key": "WED-7039",
+    }
+  ]);
+
+});
 it('Removes dashes', () => {
   expect(removeDashes('WED-6789')).toBe('WED6789');
 });
@@ -85,7 +99,7 @@ it('Can generate dot notation for multiple objects', () => {
   var arr = [
     parseBlockers(example, 'WED-5317'),
     parseBlockers(example, 'WED-7039')
-  ]
+  ];
 
 expect(toDotMultiple(arr)).toBe(
 `digraph graphname {
@@ -97,5 +111,15 @@ expect(toDotMultiple(arr)).toBe(
 
 });
 
+
+it('Parses multiple objects', () => {
+  expect(toDotMultiple(parseMultipleBlockers(example))).toBe(`digraph graphname {
+  WED6962 -> WED5317;
+  WED6960 -> WED5317;
+  WED5317 -> WED7039;
+  WED911 -> WED7039;
+}`);
+
+});
 
 

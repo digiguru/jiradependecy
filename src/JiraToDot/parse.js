@@ -2,10 +2,14 @@ export function parseBlockers(data, key) {
     const targetIssue = data.issues.find( issue => {
         return issue.key === key;
     });
+    return parseBlocker(targetIssue);
+}
+
+function parseBlocker(targetIssue) {
     const keys = {
         'blocks': [],
         'is blocked by': [],
-        "key": key
+        "key": targetIssue.key
     };
     targetIssue.fields.issuelinks.forEach( link => {
         if (link.outwardIssue) {
@@ -16,4 +20,9 @@ export function parseBlockers(data, key) {
         }
     });
     return keys;
+}
+export function parseMultipleBlockers(data) {
+    return data.issues.map(v => {
+        return parseBlocker(v);
+    });
 }
