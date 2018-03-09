@@ -30,7 +30,12 @@ export const example = {
           "issuelinks": [
             {
               "inwardIssue": {
-                "key": "WED-5317",
+                "key": "WED-5317"
+              }
+            },
+            {
+              "inwardIssue": {
+                "key": "WED-911"
               }
             }
           ]

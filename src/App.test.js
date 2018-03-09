@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {example} from './unitExample';
 import {parseBlockers} from './parse';
-import {toDot, removeDashes} from './toDot';
+import {toDot, toDotMultiple, removeDashes} from './toDot';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -24,7 +24,7 @@ it('Can parse out the linked ticket info', () => {
   expect(parseBlockers(example, 'WED-7039')).toMatchObject({
     'key': 'WED-7039',
     'blocks': [],
-    'is blocked by': ['WED-5317'],
+    'is blocked by': ['WED-5317','WED-911'],
   });
 });
 
@@ -71,12 +71,29 @@ expect(toDot(input)).toBe(output);
 })
 
 it('Can generate dot notation for entire object', () => {
-  const output = `digraph graphname {
+  expect(toDot(parseBlockers(example, 'WED-5317'))).toBe(`digraph graphname {
   WED6962 -> WED5317;
   WED6960 -> WED5317;
   WED5317 -> WED7039;
-}`;
-  expect(toDot(parseBlockers(example, 'WED-5317'))).toBe(output);
+}`);
+  expect(toDot(parseBlockers(example, 'WED-7039'))).toBe(`digraph graphname {
+  WED5317 -> WED7039;
+  WED911 -> WED7039;
+}`);
+});
+
+it('Can generate dot notation for multiple objects', () => {
+  var arr = [
+    parseBlockers(example, 'WED-5317'),
+    parseBlockers(example, 'WED-7039')
+  ]
+
+  expect(toDotMultiple(arr)).toBe(`digraph graphname {
+  WED6962 -> WED5317;
+  WED6960 -> WED5317;
+  WED5317 -> WED7039;
+  WED911 -> WED7039;
+}`);
 });
 
 

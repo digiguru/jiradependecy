@@ -1,15 +1,31 @@
 export function toDot(input){
-    let result = "digraph graphname {\n";
+    return toDotMultiple([input]);
+}
+function toDotLine(input) {
+    let lines = [];
     if(input['is blocked by']) {
         input['is blocked by'].forEach( blocker => {
-            result += `  ${removeDashes(blocker)} -> ${removeDashes(input.key)};\n`;
+            lines.push(`  ${removeDashes(blocker)} -> ${removeDashes(input.key)};\n`);
         });
     }
     if(input.blocks) {
         input.blocks.forEach( blocker => {
-            result += `  ${removeDashes(input.key)} -> ${removeDashes(blocker)};\n`;
+            lines.push(`  ${removeDashes(input.key)} -> ${removeDashes(blocker)};\n`);
         });
     }
+    return lines;
+}
+function toDotLines(inputItems) {
+    let lines = [];
+    inputItems.forEach(input => {
+        lines.push(...toDotLine(input));
+    });
+    return [...new Set(lines)];
+}
+
+export function toDotMultiple(inputItems){
+    let result = "digraph graphname {\n";
+    result += toDotLines(inputItems).join("");
     result += '}';
     return result;
 }
