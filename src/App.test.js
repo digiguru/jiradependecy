@@ -21,6 +21,11 @@ it('Can parse out the linked ticket info', () => {
     'blocks': ['WED-7039'],
     'is blocked by': ['WED-6962', 'WED-6960'],
   });
+  expect(parseBlockers(example, 'WED-7039')).toMatchObject({
+    'key': 'WED-7039',
+    'blocks': [],
+    'is blocked by': ['WED-5317'],
+  });
 });
 
 it('Removes dashes', () => {
@@ -72,4 +77,6 @@ it('Can generate dot notation for entire object', () => {
   WED5317 -> WED7039;
 }`;
   expect(toDot(parseBlockers(example, 'WED-5317'))).toBe(output);
-})
+});
+
+

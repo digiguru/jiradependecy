@@ -23,6 +23,18 @@ export const example = {
             }
           ]
         }
+      },
+      {
+        "key": "WED-7039",
+        "fields": {
+          "issuelinks": [
+            {
+              "inwardIssue": {
+                "key": "WED-5317",
+              }
+            }
+          ]
+        }
       }
     ]
   }
