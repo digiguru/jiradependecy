@@ -21,18 +21,21 @@ export default class JiraToDotApp extends Component {
     handleLogin (login) {
 
         console.log("handleLogin", login);
-        this.setState({login: login});
-        this.loadData();
+        this.setState({login: login}, () => {
+            this.loadData();
+        });
+        
     }
     loadData () {
+
         const config = {
             ...this.state.login,
             protocol: 'https',
             host: "tech.immediate.co.uk",
             apiVersion: '2',
             strictSSL: false
-        }
-        console.log("REG", config);
+        };
+        
         let jira = new JiraApi(config);
         
         jira.findIssue("WED-5318")
