@@ -33,7 +33,7 @@ export default class JiraToDotApp extends Component {
             protocol: 'https',
             host: "tech.immediate.co.uk",
             apiVersion: '2',
-            strictSSL: false
+            strictSSL: true
         };
         
         let jira = new JiraApi(config);
