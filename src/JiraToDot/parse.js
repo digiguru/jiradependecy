@@ -11,14 +11,16 @@ function parseBlocker(targetIssue) {
         'is blocked by': [],
         "key": targetIssue.key
     };
-    targetIssue.fields.issuelinks.forEach( link => {
-        if (link.outwardIssue) {
-            keys['blocks'].push(link.outwardIssue.key);
-        }
-        if (link.inwardIssue) {
-            keys['is blocked by'].push(link.inwardIssue.key);
-        }
-    });
+    if(targetIssue && targetIssue.fields && targetIssue.fields.issuelinks) {
+        targetIssue.fields.issuelinks.forEach( link => {
+            if (link.outwardIssue && link.type && link.type.name === "Blocks") {
+                keys['blocks'].push(link.outwardIssue.key);
+            }
+            if (link.inwardIssue && link.type && link.type.name === "Blocks") {
+                keys['is blocked by'].push(link.inwardIssue.key);
+            }
+        });
+    }
     return keys;
 }
 export function parseMultipleBlockers(data) {

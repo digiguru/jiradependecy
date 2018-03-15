@@ -18,6 +18,11 @@ it('Can parse out the linked ticket info', () => {
     'blocks': [],
     'is blocked by': ['WED-5317','WED-911'],
   });
+  expect(parseBlockers(example, 'WED-3774')).toMatchObject({
+    'key': 'WED-3774',
+    'blocks': [],
+    'is blocked by': [],
+  });
 });
 
 it('Parses multiple objects', () => {
@@ -32,11 +37,31 @@ it('Parses multiple objects', () => {
       "is blocked by": ["WED-5317","WED-911"],
       "key": "WED-7039",
     }
+    ,
+    {
+      "blocks": [],
+      "is blocked by": [],
+      "key": "WED-3774",
+    }
   ]);
 
 });
 it('Removes dashes', () => {
   expect(removeDashes('WED-6789')).toBe('WED6789');
+});
+
+
+it('Can generate single in Dot notation format', () => {
+  const input = {
+    'key': 'WED-3774',
+    'blocks': []
+  };
+  
+expect(toDot(input)).toBe(
+`digraph graphname {
+  WED3774;
+}`
+);
 });
 
 it('Can generate Dot notation format', () => {
@@ -98,7 +123,8 @@ expect(toDot(parseBlockers(example, 'WED-7039'))).toBe(
 it('Can generate dot notation for multiple objects', () => {
   var arr = [
     parseBlockers(example, 'WED-5317'),
-    parseBlockers(example, 'WED-7039')
+    parseBlockers(example, 'WED-7039'),
+    parseBlockers(example, 'WED-3774')
   ];
 
 expect(toDotMultiple(arr)).toBe(
@@ -107,6 +133,7 @@ expect(toDotMultiple(arr)).toBe(
   WED6960 -> WED5317;
   WED5317 -> WED7039;
   WED911 -> WED7039;
+  WED3774;
 }`);
 
 });
@@ -118,6 +145,7 @@ it('Parses multiple objects', () => {
   WED6960 -> WED5317;
   WED5317 -> WED7039;
   WED911 -> WED7039;
+  WED3774;
 }`);
 
 });

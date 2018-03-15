@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {example} from './unitExample';
+import {example} from './example';
 import {parseMultipleBlockers} from './parse';
 import {toDotMultiple} from './toDot';
 import Dot from './Dot';

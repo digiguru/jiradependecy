@@ -31,6 +31,9 @@ function toDotLine(input) {
             lines.push(`  ${removeDashes(input.key)} -> ${removeDashes(blocker)};\n`);
         });
     }
+    if(!lines.length) {
+        lines.push(`  ${removeDashes(input.key)};\n`);
+    }
     return lines;
 }
 
