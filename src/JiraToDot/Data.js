@@ -4,7 +4,7 @@ export default class TicketData {
         this.jira = new JiraApi({
             ...login,
             protocol: 'https',
-            host: "tech.immediate.co.uk",
+            host: "immediateco.atlassian.net",
             apiVersion: '2',
             strictSSL: false
         });

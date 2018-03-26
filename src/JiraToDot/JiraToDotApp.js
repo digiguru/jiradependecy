@@ -31,7 +31,7 @@ export default class JiraToDotApp extends Component {
         const config = {
             ...this.state.login,
             protocol: 'https',
-            host: "tech.immediate.co.uk",
+            host: "immediateco.atlassian.net",
             apiVersion: '2',
             strictSSL: true
         };
