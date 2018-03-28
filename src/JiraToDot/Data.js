@@ -4,8 +4,7 @@ export default class TicketData {
         this.jira = new JiraApi({
             ...login,
             protocol: 'https',
-            port: 3000,
-            host: "localhost",
+            host: "im-jira-import.herokuapp.com",
             apiVersion: '2',
             strictSSL: true
         });
