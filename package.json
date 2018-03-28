@@ -2,17 +2,23 @@
   "name": "tdd-workshop",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
+    "express": "^4.16.3",
     "jira-client": "^6.4.1",
+    "npm": "^5.8.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "viz.js": "^1.8.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start | node src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^0.18.0"
   }
 }

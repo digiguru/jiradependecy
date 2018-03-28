@@ -4,15 +4,17 @@ export default class TicketData {
         this.jira = new JiraApi({
             ...login,
             protocol: 'https',
-            host: "immediateco.atlassian.net",
+            port: 3000,
+            host: "localhost",
             apiVersion: '2',
-            strictSSL: false
+            strictSSL: true
         });
     }
 
 
     loadExample () {
-        return this.jira.findIssue("WED-5318");
+        return currentProject("WED");
+        //return this.jira.findIssue("WED-5318");
         /*
             .then(issue => {
                 console.log(`Status: ${issue.fields.status.name}`);
