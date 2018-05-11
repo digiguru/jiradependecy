@@ -1,13 +1,27 @@
-to run 
-```
-npm run start
-```
+# Jira Dependancy Graph
 
-to push 
+This is intended as a visualization of jira dependencies in a list of tickets. It renders a graph in Dot Format, based on the links between tickets.
 
-```
-git push heroku master
-```
+To run, install node & npm and download the project and run 
+
+`npm install`
+
+in the root.
+
+This is running already in the cloud:
+
+https://im-jira-import.herokuapp.com/
+
+## Tasklist
+
+- [x] Create a basic react project
+- [x] TDD data manipulation to visualization
+- [x] Have a file (named ./src/example.js) that contains example raw data
+- [x] Add a Visual Regression Test
+- [ ] Link to Jira API (currently CORS settings forbids this)
+- [ ] Improve UI
+- [ ] Allow for dynamic JQL queries
+- [ ] Save queries offline
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
