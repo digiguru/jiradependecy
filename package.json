@@ -19,7 +19,9 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "ajv": "^6.0.0",
     "http-proxy-middleware": "^0.18.0",
-    "ajv": "^6.0.0"
+    "jest-image-snapshot": "^2.4.1",
+    "puppeteer": "^1.4.0"
   }
 }
