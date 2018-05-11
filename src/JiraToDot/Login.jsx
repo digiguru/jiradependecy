@@ -22,7 +22,7 @@ export default class Login extends Component {
   render() {
     return (
         <div>
-            <label htmlFor="username">Username</label><input id="username" className="username" type="text" value="adam@hitched.co.uk" />
+            <label htmlFor="username">Username</label><input id="username" className="username" type="text" defaultValue="adam@hitched.co.uk" />
             <label htmlFor="password">Password</label><input id="password" className="password" type="password" />
             <input type="button" value="login" onClick={this.prepareLogin}  />
         </div>
