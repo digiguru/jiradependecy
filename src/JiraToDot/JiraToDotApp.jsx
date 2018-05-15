@@ -31,18 +31,16 @@ export default class JiraToDotApp extends Component {
         const config = {
             ...this.state.login,
             protocol: 'https',
-            host: "im-jira-import.herokuapp.com",
+            host: "immediateco.atlassian.net",
             apiVersion: '2',
             strictSSL: true
         };
         
         let jira = new JiraApi(config);
-        debugger;
         jira.searchJira("project = WED and Sprint in openSprints() and type in standardIssueTypes()")
             .then(issue => {
                 console.log(`Status: ${issue.fields.status.name}`, issue);
                 this.setState({graph: toDotMultiple(parseMultipleBlockers(issue))});
-                
             })
             .catch(err => {
                 console.error(err);
