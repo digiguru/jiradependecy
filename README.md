@@ -11,6 +11,8 @@ in the root.
 This is running already in the cloud:
 
 https://im-jira-import.herokuapp.com/
+and
+https://im-jira-dependency.azurewebsites.net:3000/
 
 ## Tasklist
 
