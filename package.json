@@ -19,10 +19,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "ajv": "^6.0.0",
-    "jest-image-snapshot": "^2.4.1",
-    "puppeteer": "^1.4.0"
   }
 }
