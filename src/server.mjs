@@ -1,7 +1,7 @@
 import http from 'http';
 import {DataLayer} from './JiraToDot/DataLayer';
 
-const port = 3000;
+const port = 8080;
 
 const requestHandler = async (request, response) => {
   console.log(request.url);
