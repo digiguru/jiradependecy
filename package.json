@@ -2,9 +2,7 @@
   "name": "tdd-workshop",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
   "dependencies": {
-    "express": "^4.16.3",
     "jira-client": "^6.4.1",
     "npm": "^5.8.0",
     "react": "^16.2.0",
@@ -20,7 +18,6 @@
   },
   "devDependencies": {
     "ajv": "^6.0.0",
-    "http-proxy-middleware": "^0.18.0",
     "jest-image-snapshot": "^2.4.1",
     "puppeteer": "^1.4.0"
   }
