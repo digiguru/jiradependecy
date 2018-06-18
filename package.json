@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.16.3",
     "jira-client": "^6.4.1",
-    "express": "^4.16.3"
+    "request": "^2.87.0"
   },
   "engines": {
     "node": "10.4.1",
