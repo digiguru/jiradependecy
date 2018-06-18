@@ -1,9 +1,28 @@
 import http from 'http';
 import {DataLayer} from './JiraToDot/DataLayer';
 
+
+
 const port = process.env.PORT || 4000;
 
 const requestHandler = async (request, response) => {
+
+  if(request.header.origin === "localhost") {
+    response.setHeader('Access-Control-Allow-Origin', 'localhost');
+  } else if(request.header.origin === "localhost:4000") {
+    response.setHeader('Access-Control-Allow-Origin', 'localhost:4000');
+  } else if(request.header.origin === "im-jira-import.herokuapp.com") {
+    response.setHeader('Access-Control-Allow-Origin', 'im-jira-import.herokuapp.com');
+  }
+	response.setHeader('Access-Control-Request-Method', '*');
+	response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+	response.setHeader('Access-Control-Allow-Headers', '*');
+	if ( req.method === 'OPTIONS' ) {
+		response.writeHead(200);
+		response.end();
+		return;
+	}
+
   console.log(request.url);
 
   const dirs = request.url.split("/");
