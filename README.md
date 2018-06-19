@@ -1,18 +1,11 @@
 # Jira Dependancy Graph
 
-This is intended as a visualization of jira dependencies in a list of tickets. It renders a graph in Dot Format, based on the links between tickets.
-
-To run, install node & npm and download the project and run 
-
 `npm install`
 
-in the root.
-
-This is running already in the cloud:
+`python -m SimpleHTTPServer 4000`
 
 https://im-jira-import.herokuapp.com/
-and
-https://im-jira-dependency.azurewebsites.net:3000/
+
 
 ## Tasklist
 
