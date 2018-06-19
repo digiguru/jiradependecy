@@ -24,7 +24,24 @@
     <title>React App</title>
   </head>
   <body>
-    <h3>jira dependency visualizer</h3>    
+    <h3>jira dependency visualizer</h3>
+    
+    <label>Query</label>
+    <select id="query">
+      <option value="">Please select...</option>
+      <option value="team">team</option>
+      <option value="project">project</option>
+      <option value="version">version</option>
+      <option value="sprint">sprint</option>
+      <option disabled>epics</option>
+      <option disabled>dynamic</option>
+    </select>
+
+    <label>Option</label>
+    <input id="option" type="text" />
+
+    <button id="go">Go</button>
+
     <div id="root">... loading data ...</div>
   </body>
 </html>

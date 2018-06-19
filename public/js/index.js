@@ -3,13 +3,22 @@ import {parseBlockers, parseMultipleBlockers} from './parse.js';
 import {toDot, toDotMultiple, removeDashes} from './toDot.js';
 import {callApi} from './callApi.js';
 
-//const myData = example;
+function setLoadingState() {
+    document.getElementById('root').innerHTML = "<p>... loading ...</p>";
+}
 
-callApi().then((myData) => {
-    const data = toDotMultiple(parseMultipleBlockers(myData));
-    console.log(data);
-    document.getElementById('root').innerHTML = Viz(data);
-});
+function go() {
+    setLoadingState();
+    callApi().then((myData) => {
+        const data = toDotMultiple(parseMultipleBlockers(myData));
+        console.log(data);
+        document.getElementById('root').innerHTML = Viz(data);
+    });
+}
+
+go();
+
+document.getElementById('go').onclick = go;
 
 
 
