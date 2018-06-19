@@ -15,13 +15,14 @@ https://im-jira-api.herokuapp.com/
 
 ## Tasklist
 
-- [x] Create a basic react project
+- [x] Create a basic project
 - [x] TDD data manipulation to visualization
 - [x] Have a file (named ./src/example.js) that contains example raw data
-- [x] Add a Visual Regression Test
+- [ ] Allow for different types of JQL queries
+- [ ] Allow for different dynamic JQL queruies
+- [ ] Make authentication mandatory
 - [ ] Link to Jira API (currently CORS settings forbids this)
 - [ ] Improve UI
-- [ ] Allow for dynamic JQL queries
 - [ ] Save queries offline
 - [ ] Fix the ability to copy 3rd party code into the application
 
