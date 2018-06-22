@@ -5,6 +5,7 @@ export const example = {
       {
         "key": "WED-5317",
         "fields": {
+          "customfield_11100":"WED-7305",
           "issuelinks": [
             {
               "outwardIssue": {
@@ -46,6 +47,7 @@ export const example = {
       {
         "key": "WED-7039",
         "fields": {
+          "customfield_11100":"WED-7305",
           "issuelinks": [
             {
               "inwardIssue": {

@@ -2,33 +2,15 @@
 import {parseBlockers, parseMultipleBlockers} from './parse.js';
 import {toDot, toDotMultiple, removeDashes} from './toDot.js';
 import {callApi} from './callApi.js';
-import LoginUI from './LoginUI.js';
+import LoginUI from './UI/LoginUI.js';
+import DataUI from './UI/DataUI.js';
 import Storage from './Storage.js';
 
 const loginUI = new LoginUI();
+const dataUI = new DataUI();
 const storage = new Storage();
 
 loginUI.login = storage.loadLogin();
-
-
-function setLoadingState() {
-    document.getElementById('root').innerHTML = "<p>... loading ...</p>";
-}
-
-
-
-function go() {
-    setLoadingState();
-    var login = savePageLogin();
-
-    callApi(login).then((myData) => {
-        const data = toDotMultiple(parseMultipleBlockers(myData));
-        console.log(data);
-        document.getElementById('root').innerHTML = Viz(data);
-    });
-}
-go();
-
 
 document.getElementById('go').onclick = go;
 document.getElementById('save-login').onclick = savePageLogin;
@@ -42,4 +24,13 @@ function deletePageLogin() {
     storage.deleteLogin()
     loginUI.login = {};
 }
+function go() {
+    dataUI.LoadingState();
+    var login = savePageLogin();
 
+    callApi(login).then((myData) => {
+        const data = toDotMultiple(parseMultipleBlockers(myData));
+        dataUI.Update(Viz(data));
+    });
+}
+go();

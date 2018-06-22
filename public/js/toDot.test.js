@@ -84,7 +84,7 @@ it('Can generate Dot notation format with multiple blocks', () => {
     'blocks': ['WED-7039', 'WED-6789']
   };
   
-expect(toDot(input)).toBe(
+  expect(toDot(input)).toBe(
 `digraph graphname {
   WED5317 -> WED7039;
   WED5317 -> WED6789;
@@ -102,6 +102,54 @@ expect(toDot(input)).toBe(
   WED6960 -> WED5317;
 }`);  
 })
+
+it('Can generate Dot notation format with an epic', () => {
+  const input = {
+    'key': 'WED-5317',
+    'epic': 'WED-1212'
+  };
+expect(toDot(input)).toBe(
+`digraph graphname {
+subgraph cluster_0 {
+  style=filled;
+  color=lightgrey;
+  node [style=filled,color=white];
+  WED5317;
+
+  label = "WED-1212";
+}
+}`);
+})
+
+it('Can generate Dot notation format with an empty epic', () => {
+  const input = [{
+    'key': 'WED-5317',
+    'epic': 'WED-1212'
+  },
+  {
+    'key': 'WED-5318'
+  }];
+expect(toDotMultiple(input)).toBe(
+`digraph graphname {
+subgraph cluster_0 {
+  style=filled;
+  color=lightgrey;
+  node [style=filled,color=white];
+  WED5317;
+
+  label = "WED-1212";
+}
+subgraph cluster_1 {
+  style=filled;
+  color=lightgrey;
+  node [style=filled,color=white];
+  WED5318;
+
+  label = "Others";
+}
+}`);
+})
+
 
 it('Can generate dot notation for entire object', () => {
 
@@ -149,5 +197,6 @@ it('Parses multiple objects', () => {
 }`);
 
 });
+
 
 
