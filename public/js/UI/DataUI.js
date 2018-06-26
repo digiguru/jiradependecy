@@ -7,6 +7,6 @@ export default class DataUI {
         this.Update("<p>... loading ...</p>");
     }   
     Update(html) {
-        dataArea.innerHTML = html;
+        this.dataArea.innerHTML = html;
     } 
 }
