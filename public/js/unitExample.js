@@ -14,9 +14,7 @@ export const example = {
               "type": {  
                 "name":"Blocks",
               }
- 
-            },
-            
+            },            
             {
               "inwardIssue": {
                 "key": "WED-6962",

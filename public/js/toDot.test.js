@@ -63,11 +63,12 @@ describe('Dot notation generator', () => {
       'blocks': []
     };
     
-    expect(ignoreWhiteSpace(toDot(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-  WED3774;
-}`
-    ));
+    expect(ignoreWhiteSpace(toDot(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+          WED3774;
+        }`
+      ));
   });
 
   it('Dual items', () => {
@@ -77,11 +78,12 @@ describe('Dot notation generator', () => {
       'key': 'WED-2'
     }];
     
-    expect(ignoreWhiteSpace(toDotMultiple(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-  WED1;
-  WED2;
-}`
+    expect(ignoreWhiteSpace(toDotMultiple(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+          WED1;
+          WED2;
+        }`
     ));
   });
 
@@ -92,11 +94,12 @@ describe('Dot notation generator', () => {
       'key': 'WED-1'
     }];
     
-    expect(ignoreWhiteSpace(toDotMultiple(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-  WED1;
-  WED2;
-}`
+    expect(ignoreWhiteSpace(toDotMultiple(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+          WED1;
+          WED2;
+        }`
     ));
   });
 
@@ -106,38 +109,41 @@ describe('Dot notation generator', () => {
       'blocks': ['WED-7039']
     };
     
-    expect(ignoreWhiteSpace(toDot(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-  WED5317 -> WED7039;
-}`
+    expect(ignoreWhiteSpace(toDot(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+          WED5317 -> WED7039;
+        }`
     ));
 
   })
  
-  it('Multiple blocks dependencies, with sort order', () => {
+  it('Multiple blocks dependencies', () => {
     const input = {
       'key': 'WED-5317',
       'blocks': ['WED-7039', 'WED-6789']
     };
       
-    expect(ignoreWhiteSpace(toDot(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-  WED5317 -> WED6789;
-  WED5317 -> WED7039;
-}`
+    expect(ignoreWhiteSpace(toDot(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+          WED5317 -> WED6789;
+          WED5317 -> WED7039;
+        }`
     )); 
   })
 
-  it('Blocked by dependency', () => {
+  it('Multiple blocked by dependency', () => {
     const input = {
       'key': 'WED-5317',
       'is blocked by': ['WED-6962', 'WED-6960'],
     };
-    expect(ignoreWhiteSpace(toDot(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-  WED6960 -> WED5317;
-  WED6962 -> WED5317;
-}`
+    expect(ignoreWhiteSpace(toDot(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+          WED6960 -> WED5317;
+          WED6962 -> WED5317;
+        }`
     ));  
   })
 
@@ -146,16 +152,17 @@ describe('Dot notation generator', () => {
       'key': 'WED-5317',
       'epic': 'WED-1212'
     };
-    expect(ignoreWhiteSpace(toDot(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-subgraph cluster_0 {
-  style=filled;
-  color=lightgrey;
-  node [style=filled,color=white];
-  label = "WED-1212";
-  WED5317;
-}
-}`
+    expect(ignoreWhiteSpace(toDot(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+        subgraph cluster_0 {
+          style=filled;
+          color=lightgrey;
+          node [style=filled,color=white];
+          label = "WED-1212";
+          WED5317;
+        }
+        }`
     ));
   })
 
@@ -167,23 +174,24 @@ subgraph cluster_0 {
     {
       'key': 'WED-5318'
     }];
-    expect(ignoreWhiteSpace(toDotMultiple(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-subgraph cluster_0 {
-  style=filled;
-  color=lightgrey;
-  node [style=filled,color=white];
-  label = "WED-1212";
-  WED5317;
-}
-subgraph cluster_1 {
-  style=filled;
-  color=lightgrey;
-  node [style=filled,color=white];
-  label = "Others";
-  WED5318;
-}
-}`
+    expect(ignoreWhiteSpace(toDotMultiple(input)))
+      .toBe(ignoreWhiteSpace(
+        `digraph graphname {
+        subgraph cluster_0 {
+          style=filled;
+          color=lightgrey;
+          node [style=filled,color=white];
+          label = "WED-1212";
+          WED5317;
+        }
+        subgraph cluster_1 {
+          style=filled;
+          color=lightgrey;
+          node [style=filled,color=white];
+          label = "Others";
+          WED5318;
+        }
+        }`
   ));
   })
 
@@ -200,35 +208,36 @@ subgraph cluster_1 {
       'blocks': ['WED-5320','WED-5321']
     }
   ];
-  expect(ignoreWhiteSpace(toDotMultiple(input))).toBe(ignoreWhiteSpace(
-`digraph graphname {
-subgraph cluster_0 {
-  style=filled;
-  color=lightgrey;
-  node [style=filled,color=white];
-  label = "WED-1212";
-  WED5317;
-  WED5319;
-}
-subgraph cluster_1 {
-  style=filled;
-  color=lightgrey;
-  node [style=filled,color=white];
-  label = "Others";
-  WED5318;
-  WED5320;
-  WED5321;
-  WED5322;
-  WED5323;
-  WED5328;
-}
-  WED5317 -> WED5322;
-  WED5317 -> WED5323;
-  WED5318 -> WED5317;
-  WED5319 -> WED5320;
-  WED5319 -> WED5321;
-  WED5328 -> WED5317;
-}`
+  expect(ignoreWhiteSpace(toDotMultiple(input)))
+    .toBe(ignoreWhiteSpace(
+      `digraph graphname {
+        subgraph cluster_0 {
+          style=filled;
+          color=lightgrey;
+          node [style=filled,color=white];
+          label = "WED-1212";
+          WED5317;
+          WED5319;
+        }
+        subgraph cluster_1 {
+          style=filled;
+          color=lightgrey;
+          node [style=filled,color=white];
+          label = "Others";
+          WED5318;
+          WED5320;
+          WED5321;
+          WED5322;
+          WED5323;
+          WED5328;
+        }
+        WED5317 -> WED5322;
+        WED5317 -> WED5323;
+        WED5318 -> WED5317;
+        WED5319 -> WED5320;
+        WED5319 -> WED5321;
+        WED5328 -> WED5317;
+      }`
   ));
   })
 
