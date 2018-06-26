@@ -1,6 +1,6 @@
 
 import {example} from './unitExample';
-import {parseBlockers, parseMultipleBlockers} from './parse';
+import {parseBlockers, parseMultipleBlockers, parseBlocker} from './parse';
 import {toDot, toDotMultiple, removeDashes} from './toDot';
 function ignoreWhiteSpace(string) {
   let r = RegExp("(^[ \t]+|[ \t]+$)", 'gm');
@@ -11,11 +11,53 @@ describe('Jira Parser', () => {
     expect(example.total).toBe(1);
   });
 
+  it('Can parse a simple ticket', () => {
+    const data = {
+      "key": "WED-3774"
+    };
+    expect(parseBlocker(data)).toMatchObject({
+      'key': 'WED-3774',
+      'blocks': [],
+      'is blocked by': [],
+    });
+  });
+
+  it('Can parse a simple ticket with an epic', () => {
+    const data = {
+      "key": "WED-3774",
+      "fields": {
+        "customfield_11100":"WED-7305"
+      }
+    };
+    expect(parseBlocker(data)).toMatchObject({
+      'key': 'WED-3774',
+      'epic': 'WED-7305',
+      'blocks': [],
+      'is blocked by': [],
+    });
+  });
+
+  it('Can parse a simple ticket in a list', () => {
+    const data = {
+      issues: [
+      {
+        "key": "WED-3774"
+      }
+    ]};
+
+    expect(parseBlockers(data, 'WED-3774')).toMatchObject({
+      'key': 'WED-3774',
+      'blocks': [],
+      'is blocked by': [],
+    });
+  });
+
   it('Can parse out the linked ticket info', () => {
     expect(parseBlockers(example, 'WED-5317')).toMatchObject({
       'key': 'WED-5317',
       'blocks': ['WED-7039'],
       'is blocked by': ['WED-6962', 'WED-6960'],
+      'epic': 'WED-7305'
     });
     expect(parseBlockers(example, 'WED-7039')).toMatchObject({
       'key': 'WED-7039',
@@ -50,6 +92,7 @@ describe('Jira Parser', () => {
     ]);
 
   });
+
   it('Removes dashes', () => {
     expect(removeDashes('WED-6789')).toBe('WED6789');
   });
@@ -248,6 +291,22 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
 
   expect(ignoreWhiteSpace(toDot(parseBlockers(example, 'WED-5317')))).toBe(ignoreWhiteSpace(
 `digraph graphname {
+  subgraph cluster_0 {
+    style=filled;
+    color=lightgrey;
+    node [style=filled,color=white];
+    label = "WED-7305";
+    WED5317;
+  }
+  subgraph cluster_1 {
+    style=filled;
+    color=lightgrey;
+    node [style=filled,color=white];
+    label = "Others";
+    WED6960;
+    WED6962;
+    WED7039;
+  }
   WED5317 -> WED7039;
   WED6960 -> WED5317;
   WED6962 -> WED5317;
@@ -256,9 +315,24 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
 
   expect(ignoreWhiteSpace(toDot(parseBlockers(example, 'WED-7039')))).toBe(ignoreWhiteSpace(
 `digraph graphname {
-  WED5317 -> WED7039;
-  WED911 -> WED7039;
-}`
+    subgraph cluster_0 {
+      style=filled;
+      color=lightgrey;
+      node [style=filled,color=white];
+      label = \"WED-7305\";
+      WED7039;
+    }
+    subgraph cluster_1 {
+      style=filled;
+      color=lightgrey;
+      node [style=filled,color=white];
+      label = \"Others\";
+      WED5317;
+      WED911;
+    }
+    WED5317 -> WED7039;
+    WED911 -> WED7039;
+  }`
   ));
 
   });
@@ -272,6 +346,30 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
 
   expect(ignoreWhiteSpace(toDotMultiple(arr))).toBe(ignoreWhiteSpace(
 `digraph graphname {
+  subgraph cluster_0 {
+    style=filled;
+    color=lightgrey;
+    node [style=filled,color=white];
+    label = \"WED-7305\";
+    WED5317;
+    WED7039;
+  }
+  subgraph cluster_1 {
+    style=filled;
+    color=lightgrey;
+    node [style=filled,color=white];
+    label = \"Others\";
+    WED3774;
+  }
+  subgraph cluster_2 {
+    style=filled;
+    color=lightgrey;
+    node [style=filled,color=white];
+    label = \"Others\";
+    WED6960;
+    WED6962;
+    WED911;
+  }
   WED3774;
   WED5317 -> WED7039;
   WED6960 -> WED5317;
@@ -286,12 +384,36 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
 it('Parses multiple objects', () => {
   expect(ignoreWhiteSpace(toDotMultiple(parseMultipleBlockers(example)))).toBe(ignoreWhiteSpace(
     `digraph graphname {
-  WED3774;
-  WED5317 -> WED7039;
-  WED6960 -> WED5317;
-  WED6962 -> WED5317;
-  WED911 -> WED7039;
-}`));
+      subgraph cluster_0 {
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+        label = \"WED-7305\";
+        WED5317;
+        WED7039;
+      }
+      subgraph cluster_1 {
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+        label = \"Others\";
+        WED3774;
+      }
+      subgraph cluster_2 {
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+        label = \"Others\";
+        WED6960;
+        WED6962;
+        WED911;
+      }
+      WED3774;
+      WED5317 -> WED7039;
+      WED6960 -> WED5317;
+      WED6962 -> WED5317;
+      WED911 -> WED7039;
+    }`));
 
 });
 

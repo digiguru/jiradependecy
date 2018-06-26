@@ -5,21 +5,27 @@ export function parseBlockers(data, key) {
     return parseBlocker(targetIssue);
 }
 
-function parseBlocker(targetIssue) {
+export function parseBlocker(targetIssue) {
     const keys = {
         'blocks': [],
         'is blocked by': [],
         "key": targetIssue.key
     };
-    if(targetIssue && targetIssue.fields && targetIssue.fields.issuelinks) {
-        targetIssue.fields.issuelinks.forEach( link => {
-            if (link.outwardIssue && link.type && link.type.name === "Blocks") {
-                keys['blocks'].push(link.outwardIssue.key);
-            }
-            if (link.inwardIssue && link.type && link.type.name === "Blocks") {
-                keys['is blocked by'].push(link.inwardIssue.key);
-            }
-        });
+    if(targetIssue && targetIssue.fields) {
+        if(targetIssue.fields.customfield_11100) {
+            keys.epic = targetIssue.fields.customfield_11100;
+        }
+        if(targetIssue.fields.issuelinks) {
+            targetIssue.fields.issuelinks.forEach( link => {
+                if (link.outwardIssue && link.type && link.type.name === "Blocks") {
+                    keys['blocks'].push(link.outwardIssue.key);
+                }
+                if (link.inwardIssue && link.type && link.type.name === "Blocks") {
+                    keys['is blocked by'].push(link.inwardIssue.key);
+                }
+            });
+        }
+
     }
     return keys;
 }
