@@ -19,7 +19,7 @@ https://im-jira-api.herokuapp.com/
 - [x] TDD data manipulation to visualization
 - [x] Have a file (named ./src/example.js) that contains example raw data
 - [x] Add epics
-- [ ] Add ticket status
+- [ ] Add ticket status (Backlog, In Progress, Done)
 - [ ] Allow for different types of JQL queries
 - [ ] Allow for different dynamic JQL queruies
 - [ ] Make authentication mandatory

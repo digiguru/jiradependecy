@@ -1,10 +1,9 @@
-export function toDot(input){
-    return toDotMultiple([input]);
-}
-
-export function toDotMultiple(inputItems){
+export function toDot(inputItems){
+    if(!inputItems.length) {
+        inputItems = [inputItems];
+    }
     let text;
-    const itemsWithEpics = inputItems.find(x => x.epic);
+    const itemsWithEpics = inputItems.find(x => x && x.epic);
     let lines = [];
     if(itemsWithEpics) {
         lines = lines.concat(toDotLinesWithEpics(inputItems));
@@ -38,8 +37,7 @@ class EpicNotation {
     }
     toDot(epicName, listItems) {
         const lines = toDotLinesNoDependencies(listItems);
-        //console.log({name:"ToDOT", epicName: epicName, listItems: listItems, lines:lines});
-    
+        
         return `subgraph cluster_${this.index++} {
   style=filled;
   color=lightgrey;
@@ -80,7 +78,6 @@ function toDotLinesWithEpics(inputItems) {
         }
         return total;
     }, []);
-    //console.log({"name": "OUT EPIC", "epics":epics, "blocks":blocksStories});
     epics.forEach( epic => {
         let epicName = epic.name;
         let stories = epic.items;
@@ -89,15 +86,7 @@ function toDotLinesWithEpics(inputItems) {
         lines.push(epicNotation.toDot(epicName, stories));
         
         nonEpicStories = [...nonEpicStories, ...notInEpic];
-        /*console.log({
-            "name": "IN EPIC",
-            "epic": epicName,
-            "stories":stories,
-            "keys": storyKeys,
-            "blocksStories": blocksStories,
-            "notInEpic": notInEpic,
-            "nonEpicStories": nonEpicStories
-        });//, {"notInEpic": notInEpic});*/
+       
         
         linkedStories = linkedStories.filter(v => linkedStories.includes(v.key))
     });
@@ -131,8 +120,18 @@ function toDotLinesNoDependencies(inputItems) {
     return [...new Set(lines)];
 }
 function toDotLineNoDependencies(input) {
-    const text = removeDashes(input.key)
-    return `  ${text};\n`;
+    const text = removeDashes(input.key);
+    if(input.summary || input.colour) {
+        let lines = [];
+        lines.push("node [\n");
+        if(input.summary) lines.push(`label="${input.summary}"\n`);
+        if(input.colour) lines.push(`color="${input.colour}"\n`);
+        lines.push(`] ${text};\n`);
+        return lines.join("");
+    } else {
+        return `  ${text};\n`;
+    }
+    
 }
 function toDotLine(input) {
     let lines = [];
@@ -148,7 +147,7 @@ function toDotLine(input) {
         });
     }
     if(!lines.length) {
-        lines.push(`  ${removeDashes(input.key)};\n`);
+        lines.push(toDotLineNoDependencies(input));
     }
     return lines;
 }

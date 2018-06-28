@@ -9,11 +9,18 @@ export function parseBlocker(targetIssue) {
     const keys = {
         'blocks': [],
         'is blocked by': [],
-        "key": targetIssue.key
+        'key': targetIssue.key
     };
+        
     if(targetIssue && targetIssue.fields) {
         if(targetIssue.fields.customfield_11100) {
             keys.epic = targetIssue.fields.customfield_11100;
+        }
+        if(targetIssue.fields.status && targetIssue.fields.status.name) {
+            keys.status = targetIssue.fields.status.name;
+        }
+        if(targetIssue.fields.summary) {
+            keys.summary = targetIssue.fields.summary;
         }
         if(targetIssue.fields.issuelinks) {
             targetIssue.fields.issuelinks.forEach( link => {

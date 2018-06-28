@@ -5,6 +5,11 @@ export const example = {
       {
         "key": "WED-5317",
         "fields": {
+          "summary": "The first ticket",
+          "status": 
+          {
+            "name": "Ready For Release"
+          },
           "customfield_11100":"WED-7305",
           "issuelinks": [
             {
@@ -46,6 +51,10 @@ export const example = {
         "key": "WED-7039",
         "fields": {
           "customfield_11100":"WED-7305",
+          "status":
+            {
+              "name": "In Test"
+            },
           "issuelinks": [
             {
               "inwardIssue": {
