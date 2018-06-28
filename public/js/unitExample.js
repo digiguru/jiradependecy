@@ -11,6 +11,7 @@ export const example = {
             "name": "Ready For Release"
           },
           "customfield_11100":"WED-7305",
+          "customfield_10004": "13",
           "issuelinks": [
             {
               "outwardIssue": {
@@ -51,6 +52,7 @@ export const example = {
         "key": "WED-7039",
         "fields": {
           "customfield_11100":"WED-7305",
+          "customfield_10004": "3",
           "status":
             {
               "name": "In Test"

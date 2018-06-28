@@ -7,6 +7,7 @@ function ignoreWhiteSpace(string) {
   let r = RegExp("(^[ \t]+|[ \t]+$)", 'gm');
   return  string.replace(r, '');
 }
+
 describe('Parse and Dot generator ** These do too much and should be deleted', () => {
 
   it('Can generate dot notation for entire object', () => {
@@ -20,7 +21,7 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
     label = "WED-7305";
     {
       node [
-        label=\"The first ticket\"
+        label=\"The first ticket (13)\"
       ] WED5317;
     }
   }
@@ -46,7 +47,11 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
       color=lightgrey;
       node [style=filled,color=white];
       label = \"WED-7305\";
-      WED7039;
+      {
+        node [
+          label=\"WED-7039 (3)\"
+        ] WED7039;
+      }
     }
     subgraph cluster_1 {
       style=filled;
@@ -79,10 +84,14 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
     label = \"WED-7305\";
     {
       node [
-        label=\"The first ticket\"
+        label=\"The first ticket (13)\"
       ] WED5317;
     }
-    WED7039;
+    {
+      node [
+        label=\"WED-7039 (3)\"
+      ] WED7039;
+    }
   }
   subgraph cluster_1 {
     style=filled;
@@ -121,10 +130,14 @@ it('Parses multiple objects', () => {
         label = \"WED-7305\";
         {
           node [
-            label=\"The first ticket\"
+            label=\"The first ticket (13)\"
           ] WED5317;
         }
-        WED7039;
+        {
+          node [
+            label=\"WED-7039 (3)\"
+          ] WED7039;
+        }
       }
       subgraph cluster_1 {
         style=filled;
@@ -172,11 +185,15 @@ it('Parses multiple objects', () => {
         label = \"WED-7305\";
         {
           node [
-            label=\"The first ticket\"
+            label=\"The first ticket (13)\"
             color=\"#00FF00\"
           ] WED5317;
         }
-        WED7039;
+        {
+          node [
+            label=\"WED-7039 (3)\"
+          ] WED7039;
+        }
       }
       subgraph cluster_1 {
         style=filled;

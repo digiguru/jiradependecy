@@ -30,6 +30,39 @@ describe("Jira Parser", () => {
     });
   });
 
+  it("Can parse a simple ticket with a story point value", () => {
+    const data = {
+      key: "WED-3774",
+      fields: {
+        customfield_10004: 5
+      } 
+    };
+    expect(parseBlocker(data)).toMatchObject({
+      key: "WED-3774",
+      blocks: [],
+      "is blocked by": [],
+      summary: "WED-3774 (5)"
+    });
+  });
+
+  it("Can parse a simple ticket with a story point and a summary", () => {
+    const data = {
+      key: "WED-3774",
+      fields: {
+        summary: "This is an example ticket",
+        customfield_10004: 5
+      } 
+    };
+    expect(parseBlocker(data)).toMatchObject({
+      key: "WED-3774",
+      blocks: [],
+      "is blocked by": [],
+      summary: "This is an example ticket (5)"
+    });
+  });
+  //
+
+
   it("Can parse a simple ticket with a status", () => {
     const data = {
       key: "WED-3774",

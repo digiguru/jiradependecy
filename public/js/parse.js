@@ -19,9 +19,17 @@ export function parseBlocker(targetIssue) {
         if(targetIssue.fields.status && targetIssue.fields.status.name) {
             keys.status = targetIssue.fields.status.name;
         }
+        
+        const storyPoints = targetIssue.fields.customfield_10004;    
         if(targetIssue.fields.summary) {
             keys.summary = targetIssue.fields.summary;
+            if(storyPoints) {
+                keys.summary += ` (${storyPoints})`;
+            }
+        } else if(targetIssue.fields.customfield_10004) {
+            keys.summary = `${targetIssue.key} (${storyPoints})`;
         }
+
         if(targetIssue.fields.issuelinks) {
             targetIssue.fields.issuelinks.forEach( link => {
                 if (link.outwardIssue && link.type && link.type.name === "Blocks") {
