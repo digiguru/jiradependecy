@@ -1,6 +1,7 @@
 //import {example} from './unitExample.js';
-import {parseBlockers, parseMultipleBlockers} from './parse.js';
-import {toDot, toDotMultiple, removeDashes} from './toDot.js';
+import {parseMultipleBlockers} from './parse.js';
+import {toDot} from './toDot.js';
+import {remapTickets} from './statusMapper.js';
 import {callApi} from './callApi.js';
 import LoginUI from './UI/LoginUI.js';
 import DataUI from './UI/DataUI.js';
@@ -29,7 +30,17 @@ function go() {
     var login = savePageLogin();
 
     callApi(login).then((myData) => {
-        const data = toDotMultiple(parseMultipleBlockers(myData));
+
+        const columnMappings = [
+            {'input': ['Backlog', 'Ready For Shaping', 'Ready for Development'], 
+                'output': {'colour': '#0000ff'}},
+            {'input': ['Doing', 'Review', 'Testing'], 
+                'output': {'colour': '#FFFF00'}},
+            {'input': ['Build', 'Released'], 
+                'output': {'colour': '#00FF00'}}
+        ];
+        const output = remapTickets(columnMappings, tickets);
+        const data = toDot(parseMultipleBlockers(output));
         dataUI.Update(Viz(data));
     });
 }
