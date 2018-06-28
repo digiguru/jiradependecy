@@ -35,9 +35,11 @@ describe('Dot notation generator', () => {
     expect(ignoreWhiteSpace(toDot(input)))
       .toBe(ignoreWhiteSpace(
         `digraph graphname {
-          node [
-            color="#00ff00"
-          ] WED1212;
+          {
+            node [
+              color="#00ff00"
+            ] WED1212;
+          }
         }`
       ));
   });
@@ -51,9 +53,11 @@ describe('Dot notation generator', () => {
     expect(ignoreWhiteSpace(toDot(input)))
       .toBe(ignoreWhiteSpace(
         `digraph graphname {
-          node [
-            label="Example label"
-          ] WED3774;
+          {
+            node [
+              label="Example label"
+            ] WED3774;
+          }
         }`
       ));
   });

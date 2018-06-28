@@ -18,9 +18,11 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
     color=lightgrey;
     node [style=filled,color=white];
     label = "WED-7305";
-    node [
-      label=\"The first ticket\"
-    ] WED5317;
+    {
+      node [
+        label=\"The first ticket\"
+      ] WED5317;
+    }
   }
   subgraph cluster_1 {
     style=filled;
@@ -75,9 +77,11 @@ describe('Parse and Dot generator ** These do too much and should be deleted', (
     color=lightgrey;
     node [style=filled,color=white];
     label = \"WED-7305\";
-    node [
-      label=\"The first ticket\"
-    ] WED5317;
+    {
+      node [
+        label=\"The first ticket\"
+      ] WED5317;
+    }
     WED7039;
   }
   subgraph cluster_1 {
@@ -115,9 +119,11 @@ it('Parses multiple objects', () => {
         color=lightgrey;
         node [style=filled,color=white];
         label = \"WED-7305\";
-        node [
-          label=\"The first ticket\"
-        ] WED5317;
+        {
+          node [
+            label=\"The first ticket\"
+          ] WED5317;
+        }
         WED7039;
       }
       subgraph cluster_1 {
@@ -164,10 +170,12 @@ it('Parses multiple objects', () => {
         color=lightgrey;
         node [style=filled,color=white];
         label = \"WED-7305\";
-        node [
-          label=\"The first ticket\"
-          color=\"#00FF00\"
-        ] WED5317;
+        {
+          node [
+            label=\"The first ticket\"
+            color=\"#00FF00\"
+          ] WED5317;
+        }
         WED7039;
       }
       subgraph cluster_1 {

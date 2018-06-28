@@ -123,10 +123,10 @@ function toDotLineNoDependencies(input) {
     const text = removeDashes(input.key);
     if(input.summary || input.colour) {
         let lines = [];
-        lines.push("node [\n");
+        lines.push("{\n node [\n");
         if(input.summary) lines.push(`label="${input.summary}"\n`);
         if(input.colour) lines.push(`color="${input.colour}"\n`);
-        lines.push(`] ${text};\n`);
+        lines.push(`] ${text};\n }\n`);
         return lines.join("");
     } else {
         return `  ${text};\n`;
