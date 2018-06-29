@@ -1,6 +1,7 @@
 export function parseBlockers(data, key) {
-    const targetIssue = data.issues.find( issue => {
-        return issue.key === key;
+    const tickets = data.length ? data : data.issues;
+    const targetIssue = tickets.find( ticket => {
+        return ticket.key === key;
     });
     return parseBlocker(targetIssue);
 }
@@ -45,7 +46,8 @@ export function parseBlocker(targetIssue) {
     return keys;
 }
 export function parseMultipleBlockers(data) {
-    return data.issues.map(v => {
+    const tickets = data.length ? data : data.issues;
+    return tickets.map(v => {
         return parseBlocker(v);
     });
 }

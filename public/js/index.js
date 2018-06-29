@@ -39,6 +39,7 @@ function go() {
             {'input': ['Build', 'Released'], 
                 'output': {'colour': '#00FF00'}}
         ];
+        const tickets = myData.issues;
         const output = remapTickets(columnMappings, tickets);
         const data = toDot(parseMultipleBlockers(output));
         dataUI.Update(Viz(data));
