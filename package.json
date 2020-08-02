@@ -16,7 +16,13 @@
     "npm": "6.1.0"
   },
   "jest": {
-    "reporters": [ "default", "jest-junit" ]
+    "reporters": [
+      "default",
+      "jest-junit"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": "results"
   },
   "scripts": {
     "watch-test": "jest --watch",

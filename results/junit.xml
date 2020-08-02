@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="27" failures="0" time="3.67">
+  <testsuite name="Parse and Dot generator ** These do too much and should be deleted" errors="0" failures="0" skipped="0" timestamp="2020-08-02T09:18:37" time="0.807" tests="4">
+    <testcase classname="Parse and Dot generator ** These do too much and should be deleted Can generate dot notation for entire object" name="Parse and Dot generator ** These do too much and should be deleted Can generate dot notation for entire object" time="0.051">
+    </testcase>
+    <testcase classname="Parse and Dot generator ** These do too much and should be deleted Can generate dot notation for multiple objects" name="Parse and Dot generator ** These do too much and should be deleted Can generate dot notation for multiple objects" time="0.001">
+    </testcase>
+    <testcase classname="Parse and Dot generator ** These do too much and should be deleted Parses multiple objects" name="Parse and Dot generator ** These do too much and should be deleted Parses multiple objects" time="0.001">
+    </testcase>
+    <testcase classname="Parse and Dot generator ** These do too much and should be deleted Parses multiple objects" name="Parse and Dot generator ** These do too much and should be deleted Parses multiple objects" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Jira Parser" errors="0" failures="0" skipped="0" timestamp="2020-08-02T09:18:37" time="0.071" tests="9">
+    <testcase classname="Jira Parser Can parse a simple ticket" name="Jira Parser Can parse a simple ticket" time="0.002">
+    </testcase>
+    <testcase classname="Jira Parser Can parse a simple ticket with a summary" name="Jira Parser Can parse a simple ticket with a summary" time="0">
+    </testcase>
+    <testcase classname="Jira Parser Can parse a simple ticket with a story point value" name="Jira Parser Can parse a simple ticket with a story point value" time="0.001">
+    </testcase>
+    <testcase classname="Jira Parser Can parse a simple ticket with a story point and a summary" name="Jira Parser Can parse a simple ticket with a story point and a summary" time="0">
+    </testcase>
+    <testcase classname="Jira Parser Can parse a simple ticket with a status" name="Jira Parser Can parse a simple ticket with a status" time="0">
+    </testcase>
+    <testcase classname="Jira Parser Can parse a simple ticket with an epic" name="Jira Parser Can parse a simple ticket with an epic" time="0">
+    </testcase>
+    <testcase classname="Jira Parser Can parse a simple ticket in a list" name="Jira Parser Can parse a simple ticket in a list" time="0.001">
+    </testcase>
+    <testcase classname="Jira Parser Can parse out the linked ticket info" name="Jira Parser Can parse out the linked ticket info" time="0.001">
+    </testcase>
+    <testcase classname="Jira Parser Parses multiple objects" name="Jira Parser Parses multiple objects" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Dot notation generator" errors="0" failures="0" skipped="0" timestamp="2020-08-02T09:18:37" time="0.689" tests="12">
+    <testcase classname="Dot notation generator Removes dashes" name="Dot notation generator Removes dashes" time="0.007">
+    </testcase>
+    <testcase classname="Dot notation generator Single Item" name="Dot notation generator Single Item" time="0.001">
+    </testcase>
+    <testcase classname="Dot notation generator Single Item With Status" name="Dot notation generator Single Item With Status" time="0">
+    </testcase>
+    <testcase classname="Dot notation generator Single Item With Summary" name="Dot notation generator Single Item With Summary" time="0">
+    </testcase>
+    <testcase classname="Dot notation generator Dual items" name="Dot notation generator Dual items" time="0.02">
+    </testcase>
+    <testcase classname="Dot notation generator Sorts dual items" name="Dot notation generator Sorts dual items" time="0">
+    </testcase>
+    <testcase classname="Dot notation generator Single blocks dependency" name="Dot notation generator Single blocks dependency" time="0.001">
+    </testcase>
+    <testcase classname="Dot notation generator Multiple blocks dependencies" name="Dot notation generator Multiple blocks dependencies" time="0">
+    </testcase>
+    <testcase classname="Dot notation generator Multiple blocked by dependency" name="Dot notation generator Multiple blocked by dependency" time="0.001">
+    </testcase>
+    <testcase classname="Dot notation generator Single item in an epic" name="Dot notation generator Single item in an epic" time="0">
+    </testcase>
+    <testcase classname="Dot notation generator An empty epic (if another one already exists)" name="Dot notation generator An empty epic (if another one already exists)" time="0.001">
+    </testcase>
+    <testcase classname="Dot notation generator Can generate Dot notation format with an empty epic" name="Dot notation generator Can generate Dot notation format with an empty epic" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2020-08-02T09:18:37" time="0.736" tests="2">
+    <testcase classname=" Renames card statuses based on their mappings" name=" Renames card statuses based on their mappings" time="0.004">
+    </testcase>
+    <testcase classname=" Puts dynamic objects in based on mappings" name=" Puts dynamic objects in based on mappings" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>
