@@ -15,13 +15,18 @@
     "node": "10.5.0",
     "npm": "6.1.0"
   },
+  "jest": {
+    "reporters": [ "default", "jest-junit" ]
+  },
   "scripts": {
     "watch-test": "jest --watch",
+    "test:ci": "jest --ci --reporters=jest-junit",
     "test": "jest",
     "start": "node src/server.js"
   },
   "proxy": "http://localhost:4000",
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "jest-junit": "^11.1.0"
   }
 }
