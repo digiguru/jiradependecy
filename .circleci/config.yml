@@ -2,10 +2,8 @@ version: 2.1
 orbs:
   node: circleci/node@5.2.0
 jobs:
-  example-job:
-    docker:
-    # replace with your preferred image
-      - image: cimg/base:stable
+  build_and_test:
+    executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
       - node/install-packages:
@@ -20,4 +18,4 @@ jobs:
 workflows:
   example-workflow:
     jobs:
-      - example-job
+      - build_and_test
