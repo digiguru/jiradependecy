@@ -1,8 +1,8 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@5.2.0
 jobs:
   build:
-    docker:
-      - image: cimg/node:20.7.0
     steps:
       - checkout
       - restore_cache: # special step to restore the dependency cache
