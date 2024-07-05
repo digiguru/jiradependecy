@@ -8,8 +8,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
+      - node/install-packages
       - restore_cache: # special step to restore the dependency cache
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package.json" }}
