@@ -1,20 +1,13 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@5.2.0
 jobs:
-  build:
-    docker:
-      - image: cimg/node:20.7.0
+  build_and_test:
+    executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install-packages
-          command: npm ci
-      - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
+      - node/install-packages:
+          pkg-manager: npm
       - run: # run tests
           name: test
           command: npm run test:ci
@@ -22,3 +15,7 @@ jobs:
           path: results
       - store_artifacts:
           path: results
+workflows:
+  example-workflow:
+    jobs:
+      - build_and_test
