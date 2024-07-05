@@ -2,10 +2,11 @@ version: 2.1
 orbs:
   node: circleci/node@5.2.0
 jobs:
-  build:
-    executor: node/default # use the default executor defined within the orb
+  example-job:
+    docker:
+    # replace with your preferred image
+      - image: cimg/base:stable
     steps:
-      - checkout
       - node/install-packages:
           pkg-manager: npm
       - restore_cache: # special step to restore the dependency cache
@@ -25,3 +26,7 @@ jobs:
           path: results
       - store_artifacts:
           path: results
+workflows:
+  example-workflow:
+    jobs:
+      - example-job
