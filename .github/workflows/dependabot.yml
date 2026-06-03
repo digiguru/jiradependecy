@@ -1,11 +1,9 @@
 version: 2
 updates:
-  - package-ecosystem: "npm" # Replace with your ecosystem (e.g., pip, bundler, github-actions)
+  - package-ecosystem: "npm" # or your specific ecosystem
     directory: "/"
     schedule:
-      interval: "weekly" # Can be daily, weekly, or monthly
-
-    # Group all dependencies together into a single PR
+      interval: "weekly"
     groups:
       all-dependencies:
         patterns:
