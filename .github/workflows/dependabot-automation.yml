@@ -1,15 +1,50 @@
-name: Dependabot Auto-Merge
+name: CI & Dependabot Automation
 
-on: pull_request
+on:
+  push:
+    branches: [ main ]
+  pull_request:
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
+  # 1. This job replaces your CircleCI build_and_test workflow
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*' # Uses latest Long Term Support version, or specify e.g., '20'
+          cache: 'npm'          # Automatically caches your node_modules for faster runs
+
+      - name: Install packages
+        run: npm ci             # Equivalent to CircleCI's node/install-packages
+
+      - name: Run tests
+        run: npm run test:ci
+
+      # Replicates CircleCI's store_test_results / store_artifacts
+      - name: Upload Test Artifacts
+        if: always()            # Ensures artifacts upload even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: results/
+
+  # 2. This job handles the Dependabot approval and merge
   dependabot-merge:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    needs: build_and_test       # <-- CRITICAL: This forces tests to pass first!
+    
+    # Only run if this is a PR and it was opened by Dependabot
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
+    
     steps:
       - name: Approve and trigger auto-merge
         run: |
