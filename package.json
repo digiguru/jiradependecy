@@ -6,15 +6,14 @@
     "@babel/core": "^8.0.1",
     "babel-jest": "^30.4.1",
     "@babel/preset-env": "^8.0.2",
-    
     "express": "^5.2.1",
     "jest": "^30.4.2",
     "regenerator-runtime": "^0.14.1",
     "viz.js": "^2.1.2"
   },
   "engines": {
-    "node": "v20.x",
-    "npm": "10.7.0"
+    "node": ">=24.11.0",
+    "npm": ">=10.7.0"
   },
   "jest": {
     "reporters": [
@@ -27,7 +26,7 @@
   },
   "scripts": {
     "watch-test": "jest --watch",
-    "test:ci": "jest --ci --reporters=jest-junit",
+    "test:ci": "jest --ci",
     "test": "jest",
     "start": "node src/server.js"
   },
