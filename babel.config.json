@@ -1,13 +1,12 @@
 {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "20"
-          },
-          "useBuiltIns": "usage"
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "24.11"
         }
-      ]
+      }
     ]
-  }
+  ]
+}
