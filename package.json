@@ -12,7 +12,7 @@
     "viz.js": "^2.1.2"
   },
   "engines": {
-    "node": ">=24.11.0",
+    "node": "24.x",
     "npm": ">=10.7.0"
   },
   "jest": {
@@ -25,6 +25,8 @@
     "outputDirectory": "results"
   },
   "scripts": {
+    "build": "node --check src/server.js",
+    "lint": "npx --yes eslint@10 src public/js --ignore-pattern public/js/3rdParty/** --ignore-pattern public/js/example.js",
     "watch-test": "jest --watch",
     "test:ci": "jest --ci",
     "test": "jest",
