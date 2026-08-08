@@ -31,9 +31,20 @@ export default [
         document: "readonly",
         fetch: "readonly",
         localStorage: "readonly",
+        Viz: "readonly",
         window: "readonly",
       },
     },
     rules: commonRules,
+  },
+  {
+    files: ["public/js/**/*.test.js"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        expect: "readonly",
+        it: "readonly",
+      },
+    },
   },
 ];
