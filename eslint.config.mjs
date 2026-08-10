@@ -13,6 +13,7 @@ export default [
       ecmaVersion: "latest",
       sourceType: "script",
       globals: {
+        __dirname: "readonly",
         console: "readonly",
         module: "readonly",
         process: "readonly",
