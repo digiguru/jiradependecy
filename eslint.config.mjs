@@ -5,7 +5,7 @@ const commonRules = {
 
 export default [
   {
-    ignores: ["node_modules/**", "public/js/3rdParty/**", "public/js/example.js", "results/**"],
+    ignores: ["node_modules/**", "public/js/example.js", "results/**"],
   },
   {
     files: ["src/**/*.js"],
@@ -13,6 +13,7 @@ export default [
       ecmaVersion: "latest",
       sourceType: "script",
       globals: {
+        __dirname: "readonly",
         console: "readonly",
         module: "readonly",
         process: "readonly",
@@ -31,7 +32,6 @@ export default [
         document: "readonly",
         fetch: "readonly",
         localStorage: "readonly",
-        Viz: "readonly",
         window: "readonly",
       },
     },
