@@ -2,13 +2,13 @@
 
 A browser-based prototype for visualising Jira issue dependencies as a Graphviz graph.
 
-The application takes Jira issue data, extracts `blocks` / `is blocked by` relationships, maps workflow status information, converts the result to Graphviz DOT, and renders the graph in the browser with Viz.js.
+The public demo accepts Jira-style rows copied from a spreadsheet, converts blocking relationships into Graphviz DOT, and renders the result in the browser with Viz.js.
 
 ## Project status
 
-This is the **older browser UI prototype** of the Jira dependency-mapping idea.
+This is the **older browser UI prototype** of the Jira dependency-mapping idea, now preserved as a safe static demo.
 
-Its original live Jira flow calls a separate Heroku API proxy that is no longer expected to be available, so the live-login path should be treated as historical until that integration is replaced. The repository still contains the browser rendering pipeline, bundled example Jira data, tests, and a small Express server for serving the UI and Viz.js assets.
+The original live Jira flow used a separate Heroku API proxy that is no longer expected to be available. The public deployment does not request Jira credentials or call that proxy. Instead, it works from pasted spreadsheet rows and bundled synthetic mock data.
 
 For the newer scriptable implementation, see **[`digiguru/jira-dependency-map`](https://github.com/digiguru/jira-dependency-map)**. That repository queries Jira directly from a Node CLI, supports YAML-configured field mappings/remapping, and emits raw, transformed or Graphviz DOT output.
 
@@ -16,21 +16,63 @@ For the newer scriptable implementation, see **[`digiguru/jira-dependency-map`](
 
 | Repository | Best for | Interface | Jira access |
 | --- | --- | --- | --- |
-| `jiradependecy` (this repo) | Exploring the original visual browser prototype | Web UI | Historical proxy-based integration |
+| `jiradependecy` (this repo) | Exploring or sharing dependency data visually | Static web UI with spreadsheet paste | Pasted/exported rows |
 | `jira-dependency-map` | Repeatable dependency queries, automation and configurable exports | Node CLI | Direct Jira Cloud REST API |
+
+## Spreadsheet paste workflow
+
+The browser demo is designed to work with rows copied directly from Excel, Google Sheets or a Jira export opened in a spreadsheet.
+
+1. Put the Jira-style data in a sheet with a header row.
+2. Copy the cells, including the header row.
+3. Paste them into the textarea in the demo.
+4. Select **Render pasted rows**.
+
+Spreadsheet copies are normally tab-separated, which is the preferred format. Quoted CSV is also accepted.
+
+### Friendly column names
+
+The demo understands these simple headers:
+
+| Column | Purpose |
+| --- | --- |
+| `Key` | Jira issue key. Required. |
+| `Summary` | Issue title shown in the graph. |
+| `Status` | Jira workflow status used for graph colouring. |
+| `Story Points` | Optional estimate appended to the graph label. |
+| `Group` | Cluster/epic/parent grouping. |
+| `Blocks` | Issue keys blocked by this row. |
+| `Blocked By` | Issue keys that block this row. |
+
+Multiple keys in `Blocks` or `Blocked By` may be separated with commas or semicolons.
+
+The parser also recognises common Jira-export headers including `Issue key`, `Story point estimate`, `Parent`, `Outward issue link (Blocks)` and `Inward issue link (Blocks)`. Repeated Jira link columns are combined.
+
+## Bundled mock data
+
+[`public/mock-jira-data.tsv`](public/mock-jira-data.tsv) contains a small, entirely synthetic Jira-style dataset. It is intentionally stored as TSV so it can be:
+
+- opened directly in a spreadsheet;
+- copied from the repository;
+- copied from the demo with **Copy rows**;
+- pasted back into the demo and edited freely.
+
+The browser loads this file automatically on startup and renders it as the initial graph.
+
+`public/js/example.js` remains as historical Jira-shaped fixture data used by the original prototype, but the public demo no longer depends on it.
 
 ## Architecture
 
-The browser pipeline is intentionally small:
+The static browser pipeline is intentionally small:
 
-1. `callApi.js` requests Jira issue data through the original proxy.
-2. `parse.js` extracts blocking relationships and display information.
+1. `mock-jira-data.tsv` provides safe synthetic starting data.
+2. `spreadsheetParser.js` converts pasted TSV/CSV rows into the graph model.
 3. `statusMapper.js` maps Jira workflow states to graph styling.
 4. `toDot.js` converts the dependency model to Graphviz DOT.
 5. `renderGraph.js` renders DOT as SVG using `@viz-js/viz`.
-6. The UI modules display the resulting graph and manage the prototype login/query controls.
+6. `index.js` coordinates loading, copying, parsing and rendering.
 
-`public/js/example.js` contains bundled Jira-shaped example data used to exercise the transformation logic without needing a current Jira response.
+The historical proxy/query modules remain in the repository for reference but are not part of the deployed static demo flow.
 
 ## Run locally
 
@@ -47,7 +89,7 @@ Then open:
 http://localhost:4000
 ```
 
-The Express server serves the browser application from `public/` and exposes the installed Viz.js distribution under `/vendor/viz`.
+The Express server is retained as a convenient local static server and exposes the installed Viz.js distribution under `/vendor/viz`.
 
 ## Development
 
@@ -55,15 +97,16 @@ The Express server serves the browser application from `public/` and exposes the
 npm test
 npm run lint
 npm run build
+npm run smoke
 ```
 
-The tests cover parsing, status mapping, Graphviz DOT generation and rendering-related behaviour.
+Tests cover Jira parsing, spreadsheet-row parsing, status mapping, Graphviz DOT generation and rendering-related behaviour. The smoke test builds the actual `dist/` output, serves it over HTTP, and verifies the page, spreadsheet parser, mock TSV and Viz.js runtime are all available.
 
 ## Live Jira integration caveat
 
-The browser code still reflects the original architecture in which a separate service proxied Jira requests to work around browser/CORS constraints. That service was hosted on Heroku and should not be relied on now.
+The original browser code reflects an architecture in which a separate service proxied Jira requests to work around browser/CORS constraints. That service was hosted on Heroku and should not be relied on now.
 
-Do **not** enter real Jira credentials into a public deployment of this prototype unless the authentication architecture is replaced and reviewed. For current Jira querying, prefer `jira-dependency-map`.
+The public demo intentionally avoids asking for Jira credentials. For current direct Jira querying, prefer `jira-dependency-map`.
 
 ## History
 
