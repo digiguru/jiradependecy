@@ -1,0 +1,8 @@
+Key	Summary	Status	Story Points	Group	Blocks	Blocked By
+DEMO-100	Foundation work	Released	8	Platform	DEMO-110	
+DEMO-110	Login screen	Testing	5	Customer App	DEMO-120	DEMO-100
+DEMO-120	Account dashboard	Doing	8	Customer App	DEMO-130, DEMO-300	DEMO-110
+DEMO-130	Notification preferences	Ready for Development	3	Customer App		DEMO-120
+DEMO-200	Event pipeline	Build	13	Data Platform	DEMO-120	
+DEMO-300	Marketing homepage	Backlog	3	Web		DEMO-120
+DEMO-400	Production monitoring	Ready For Shaping	5	Operations	DEMO-200	
