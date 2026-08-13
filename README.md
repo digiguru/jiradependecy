@@ -1,30 +1,70 @@
-# Jira Dependancy Graph
+# Jira Dependency Visualizer
 
-`npm install`
+A browser-based prototype for visualising Jira issue dependencies as a Graphviz graph.
 
-Due to me not understanding modules & node. I can't seem to automatically copy the Viz module into the application, so instead I have to manually copy it from node_modules into the 3rdParty Public folder.
+The application takes Jira issue data, extracts `blocks` / `is blocked by` relationships, maps workflow status information, converts the result to Graphviz DOT, and renders the graph in the browser with Viz.js.
 
+## Project status
 
-`npm start`
+This is the **older browser UI prototype** of the Jira dependency-mapping idea.
 
-https://im-jira-import.herokuapp.com/
+Its original live Jira flow calls a separate Heroku API proxy that is no longer expected to be available, so the live-login path should be treated as historical until that integration is replaced. The repository still contains the browser rendering pipeline, bundled example Jira data, tests, and a small Express server for serving the UI and Viz.js assets.
 
-This relies on a remote API proxy found here:
+For the newer scriptable implementation, see **[`digiguru/jira-dependency-map`](https://github.com/digiguru/jira-dependency-map)**. That repository queries Jira directly from a Node CLI, supports YAML-configured field mappings/remapping, and emits raw, transformed or Graphviz DOT output.
 
-https://im-jira-api.herokuapp.com/
+### Which repository should I use?
 
-## Tasklist
+| Repository | Best for | Interface | Jira access |
+| --- | --- | --- | --- |
+| `jiradependecy` (this repo) | Exploring the original visual browser prototype | Web UI | Historical proxy-based integration |
+| `jira-dependency-map` | Repeatable dependency queries, automation and configurable exports | Node CLI | Direct Jira Cloud REST API |
 
-- [x] Create a basic project
-- [x] TDD data manipulation to visualization
-- [x] Have a file (named ./src/example.js) that contains example raw data
-- [x] Add epics
-- [ ] Add ticket status (Backlog, In Progress, Done)
-- [ ] Allow for different types of JQL queries
-- [ ] Allow for different dynamic JQL queruies
-- [ ] Make authentication mandatory
-- [ ] Link to Jira API (currently CORS settings forbids this)
-- [ ] Improve UI
-- [ ] Save queries offline
-- [ ] Fix the ability to copy 3rd party code into the application
+## Architecture
 
+The browser pipeline is intentionally small:
+
+1. `callApi.js` requests Jira issue data through the original proxy.
+2. `parse.js` extracts blocking relationships and display information.
+3. `statusMapper.js` maps Jira workflow states to graph styling.
+4. `toDot.js` converts the dependency model to Graphviz DOT.
+5. `renderGraph.js` renders DOT as SVG using `@viz-js/viz`.
+6. The UI modules display the resulting graph and manage the prototype login/query controls.
+
+`public/js/example.js` contains bundled Jira-shaped example data used to exercise the transformation logic without needing a current Jira response.
+
+## Run locally
+
+Requires Node.js 24.x.
+
+```bash
+npm ci
+npm start
+```
+
+Then open:
+
+```text
+http://localhost:4000
+```
+
+The Express server serves the browser application from `public/` and exposes the installed Viz.js distribution under `/vendor/viz`.
+
+## Development
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+The tests cover parsing, status mapping, Graphviz DOT generation and rendering-related behaviour.
+
+## Live Jira integration caveat
+
+The browser code still reflects the original architecture in which a separate service proxied Jira requests to work around browser/CORS constraints. That service was hosted on Heroku and should not be relied on now.
+
+Do **not** enter real Jira credentials into a public deployment of this prototype unless the authentication architecture is replaced and reviewed. For current Jira querying, prefer `jira-dependency-map`.
+
+## History
+
+This project began as a test-driven browser experiment for turning Jira dependency data into a useful visual graph. The later `jira-dependency-map` project carries the same core dependency-graph idea forward as a more configurable command-line workflow.
