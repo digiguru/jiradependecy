@@ -42,5 +42,11 @@ jobs:
       - name: Run tests
         run: npm run test:ci
 
-      - name: Build validation
+      - name: Build static demo
         run: npm run build
+
+      - name: Verify Vercel output
+        run: |
+          test -f dist/index.html
+          test -f dist/js/index.js
+          test -f dist/vendor/viz/viz.js
