@@ -13,6 +13,7 @@
   "scripts": {
     "build": "node scripts/build-static.mjs",
     "lint": "eslint src public/js --ignore-pattern public/js/example.js",
+    "smoke": "node scripts/smoke-static.mjs",
     "watch-test": "vitest",
     "test:ci": "vitest run",
     "test": "vitest run",
