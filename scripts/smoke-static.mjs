@@ -7,12 +7,16 @@ const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 const routes = new Map([
   ['/', 'index.html'],
   ['/js/index.js', 'js/index.js'],
+  ['/js/spreadsheetParser.js', 'js/spreadsheetParser.js'],
+  ['/mock-jira-data.tsv', 'mock-jira-data.tsv'],
   ['/vendor/viz/viz.js', 'vendor/viz/viz.js'],
 ]);
 
 const contentTypes = new Map([
   ['index.html', 'text/html; charset=utf-8'],
   ['js/index.js', 'text/javascript; charset=utf-8'],
+  ['js/spreadsheetParser.js', 'text/javascript; charset=utf-8'],
+  ['mock-jira-data.tsv', 'text/tab-separated-values; charset=utf-8'],
   ['vendor/viz/viz.js', 'text/javascript; charset=utf-8'],
 ]);
 
@@ -52,15 +56,25 @@ const baseUrl = `http://127.0.0.1:${address.port}`;
 try {
   for (const pathname of routes.keys()) {
     const response = await fetch(`${baseUrl}${pathname}`);
-    const body = await response.arrayBuffer();
+    const body = await response.text();
 
     if (!response.ok) {
       throw new Error(`${pathname} returned ${response.status}`);
     }
 
-    if (body.byteLength === 0) {
+    if (body.length === 0) {
       throw new Error(`${pathname} returned an empty response`);
     }
+  }
+
+  const page = await (await fetch(`${baseUrl}/`)).text();
+  if (!page.includes('id="jira-data"') || !page.includes('id="render-data"')) {
+    throw new Error('Spreadsheet paste controls are missing from the built page.');
+  }
+
+  const mockRows = await (await fetch(`${baseUrl}/mock-jira-data.tsv`)).text();
+  if (!mockRows.startsWith('Key\tSummary\tStatus') || !mockRows.includes('DEMO-100')) {
+    throw new Error('Bundled mock Jira rows are missing or malformed.');
   }
 
   console.log('Static deployment smoke test passed.');
