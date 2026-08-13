@@ -11,7 +11,7 @@
     "npm": ">=10.7.0"
   },
   "scripts": {
-    "build": "node --check src/server.js",
+    "build": "node scripts/build-static.mjs",
     "lint": "eslint src public/js --ignore-pattern public/js/example.js",
     "watch-test": "vitest",
     "test:ci": "vitest run",
