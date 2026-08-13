@@ -50,3 +50,6 @@ jobs:
           test -f dist/index.html
           test -f dist/js/index.js
           test -f dist/vendor/viz/viz.js
+
+      - name: Smoke test built site
+        run: npm run smoke
