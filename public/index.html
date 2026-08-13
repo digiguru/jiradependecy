@@ -15,16 +15,74 @@
     </script>
     <script type="module" src="/js/index.js"></script>
     <title>Jira Dependency Visualizer</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        line-height: 1.5;
+        margin: 0 auto;
+        max-width: 1100px;
+        padding: 1.5rem;
+      }
+
+      textarea {
+        box-sizing: border-box;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        min-height: 15rem;
+        width: 100%;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.75rem 0;
+      }
+
+      #data-status[data-error="true"] {
+        font-weight: 700;
+      }
+
+      #root {
+        margin-top: 1rem;
+        overflow: auto;
+      }
+    </style>
   </head>
   <body>
     <h1>Jira Dependency Visualizer</h1>
     <p>
-      Browser-based prototype for turning Jira issue links into a Graphviz dependency graph.
-      This public deployment uses the repository's bundled example Jira data.
+      Paste rows copied from a spreadsheet or Jira export to turn blocking relationships into a dependency graph.
+      The bundled data is entirely synthetic and safe to copy, edit and paste back into the demo.
     </p>
 
-    <button id="load-example" type="button">Reload example dependency graph</button>
-    <div id="root">... loading example ...</div>
+    <h2>Jira-style spreadsheet rows</h2>
+    <p id="paste-help">
+      Copy cells from Excel or Google Sheets and paste them below. The first row must contain headers.
+      Tab-separated spreadsheet data is preferred; quoted CSV is also accepted.
+    </p>
+    <textarea id="jira-data" aria-describedby="paste-help" spellcheck="false"></textarea>
+
+    <div class="actions">
+      <button id="render-data" type="button">Render pasted rows</button>
+      <button id="load-example" type="button">Load mock rows</button>
+      <button id="copy-example" type="button">Copy rows</button>
+    </div>
+
+    <p id="data-status" role="status" aria-live="polite"></p>
+
+    <details>
+      <summary>Supported columns</summary>
+      <p>
+        Friendly headers are <code>Key</code>, <code>Summary</code>, <code>Status</code>, <code>Story Points</code>,
+        <code>Group</code>, <code>Blocks</code> and <code>Blocked By</code>. Common Jira export names such as
+        <code>Issue key</code>, <code>Story point estimate</code>, <code>Parent</code>,
+        <code>Outward issue link (Blocks)</code> and <code>Inward issue link (Blocks)</code> are also recognised.
+      </p>
+      <p>Put multiple issue keys in a dependency cell separated by commas or semicolons.</p>
+    </details>
+
+    <h2>Dependency graph</h2>
+    <div id="root">... loading mock data ...</div>
 
     <p>
       Live Jira querying is intentionally not enabled in this public demo. See the repository documentation
