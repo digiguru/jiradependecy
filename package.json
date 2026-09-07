@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@viz-js/viz": "^3.28.0",
+    "@viz-js/viz": "^3.30.0",
     "express": "^5.2.1"
   },
   "engines": {
@@ -22,6 +22,6 @@
   "proxy": "http://localhost:4000",
   "devDependencies": {
     "eslint": "^10.9.1",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.0"
   }
 }
